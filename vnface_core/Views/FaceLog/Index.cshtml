@@ -1,0 +1,79 @@
+﻿@model IEnumerable<vnface_core.Models.FaceLogTb>
+@using vnface_core
+@using vnface_core.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="bg-success text-center">FACE_LOG</h2>
+<script src="/Assets/js/core/jquery.min.js"></script>
+<script src="/Assets/js/core/popper.min.js"></script>
+<script src="/Assets/js/core/bootstrap-material-design.min.js"></script>
+<input type="text" placeholder="tìm kiếm" id="myInput" />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FaceImg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RecognizeImg)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="myTable">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    <img src="@Html.DisplayFor(modelItem => item.FaceImg) " style="width:200px;height:250px" />
+                </td>
+                <td>
+                    <img src="@Html.DisplayFor(modelItem => item.RecognizeImg) " style="width:200px;height:250px" />
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Chi tiết</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="/">Quay lại</a>
+
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
